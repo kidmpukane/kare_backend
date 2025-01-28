@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .programs import (
+from .models import (
     DrySkinProgram,
     OilySkinProgram,
     CombinationSkinProgram,

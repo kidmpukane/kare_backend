@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'accounts',
     'user_profiles',
     'skin_assessments',
+    'programs',
 ]
 
 MIDDLEWARE = [
