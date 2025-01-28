@@ -1,0 +1,12 @@
+{
+  "quiz_answers": [0, 2, 4, 1, 2]
+}
+
+
+{
+  "email": "user@email.com",
+  "password": "qwerty123456",
+  "re_password": "qwerty123456"
+}
+
+

@@ -8,12 +8,6 @@ class UserSkinAssessmentResults(RandomIDModel):
         UserProfile, on_delete=models.CASCADE, related_name='AssessmentOwner'
     )
     skin_type = models.CharField(max_length=500, default='Default Skin Type')
-    recommended_products = models.JSONField(
-        default=list, blank=True
-    )  # Stores product recommendations
-    recommended_programs = models.JSONField(
-        default=list, blank=True
-    )  # Stores program recommendations
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
