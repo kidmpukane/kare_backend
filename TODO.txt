@@ -1,0 +1,5 @@
+TODO:
+1. Add a dummy evaluation test
+2. Create a Condition Table
+3. Create Programs Table
+4. Map out the flow
