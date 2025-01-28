@@ -1,0 +1,8 @@
+Skin Type,Glycerin,Hyaluronic Acid,Ceramides,Aloe Vera,Antioxidants,Botanical Extracts,Salicylic Acid,Benzoyl Peroxide,Niacinamide,Glycolic Acid,Witch Hazel,Tea Tree Oil,Poly Hydroxy Acids,Oat Extract,Shea Butter,Squalane,Vitamin C,Retinoids,Peptides,Jojoba Oil,Argan Oil,Honey,Cleanser,Hydrator/Moisturizer,Treater,Protector
+Normal Skin,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0
+Mixture Skin,1,1,0,1,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0
+Oily & Acne,0,1,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0
+Dry & Sensitive,1,1,1,1,0,0,0,0,1,0,0,0,1,1,1,1,0,0,0,0,0,0,1,1,0,0
+"Mature, Dull, Pigmentation, & Sun-damaged",0,1,0,0,1,0,0,0,1,1,0,0,0,0,0,0,1,1,1,0,0,0,1,1,0,0
+Dry Skin,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,1,1,1,1,0,1
+Mature Skin,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,1,0,0,0,1,1,0,0

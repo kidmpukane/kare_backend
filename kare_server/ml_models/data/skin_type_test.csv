@@ -1,0 +1,6 @@
+Question,Normal Skin,Oily Skin,Dry Skin,Combination Skin,Sensitive Skin
+How does your skin feel after cleansing?,0,1,-1,0.5,-0.5
+How often do you experience breakouts?,-1,1,-1,0,0
+How does your skin feel midday?,0,1,-1,0.5,-0.5
+How does your skin react to new products?,1,0,-1,0,1
+How does your skin feel in harsh weather?,0,1,-1,0,1
