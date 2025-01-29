@@ -3,9 +3,9 @@ TODO:
 [x] Create a Skin Assessment Table
 [x] Create Programs Table
 [x] Map out the flow
-[] Fix account registration bug
-[] Fix account login
-[] Fix account CRUD
+[x] Fix account registration bug
+[x] Fix account login
+[x] Fix account CRUD
 [] Fix Skin Assessment Form bugs
 [] Create get program by Fk:ID
 

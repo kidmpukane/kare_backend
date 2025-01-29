@@ -32,7 +32,6 @@ class PredictSkinAPIView(APIView):
         # Save the results in the database, also saving the user_id
         skin_assessment_result, created = UserSkinAssessmentResults.objects.update_or_create(
             user_name=user_profile,
-            user_id=user_profile,  # Save the user_id as the same profile
             defaults={
                 "skin_type": predicted_skin_type,
             },
