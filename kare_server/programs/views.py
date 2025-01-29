@@ -1,9 +1,15 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 import json
 from .models import NormalSkinProgram, OilySkinProgram, DrySkinProgram, CombinationSkinProgram, SensitiveSkinProgram
+from .serializers import NormalSkinProgramSerializer, OilySkinProgramSerializer, DrySkinProgramSerializer, CombinationSkinProgramSerializer, SensitiveSkinProgramSerializer
 
-# Mapping skin type to corresponding model
+
+
 SKIN_TYPE_PROGRAMS = {
     0: NormalSkinProgram,
     1: OilySkinProgram,
@@ -12,14 +18,11 @@ SKIN_TYPE_PROGRAMS = {
     4: SensitiveSkinProgram,
 }
 
-# Function to fetch program based on skin type
 def get_program_by_skin_type(skin_type):
     model = SKIN_TYPE_PROGRAMS.get(skin_type)
-    if model:
-        return model.objects.first()  # Assuming only one instance per skin type
-    return None
+    return model.objects.first() if model else None
 
-@csrf_exempt  # Disable CSRF for testing with tools like Postman
+@csrf_exempt
 def get_recommended_program(request):
     if request.method == "POST":
         try:
@@ -42,4 +45,13 @@ def get_recommended_program(request):
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON"}, status=400)
 
+    elif request.method == "GET":  # Allow testing with GET
+        return JsonResponse({"message": "Use POST with { 'skin_type': X }"}, status=200)
+
     return JsonResponse({"error": "Invalid request method"}, status=405)
+
+class ListAllProgramView(APIView):
+    def get(self, request, format=None):
+        program = NormalSkinProgram.objects.all()
+        serializer = NormalSkinProgramSerializer(program, many=True)
+        return Response(serializer.data)

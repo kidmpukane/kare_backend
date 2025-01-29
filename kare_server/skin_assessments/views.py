@@ -45,19 +45,20 @@ class PredictSkinAPIView(APIView):
         }, status=status.HTTP_201_CREATED)
 
 
-# class PredictSkin(APIView):
-#   def post(self, request):
-#       serializer = PredictRequestSerializer(data=request.data)
-#       serializer.is_valid(raise_exception=True)
-#       quiz_answers = serializer.validated_data['quiz_answers']
-#       predicted_skin_type = predict_skin_type(quiz_answers)
-
-#       # Get all products
-#       products = Products.objects.all()
-
-#       # Filter products by the predicted skin type
-#       filtered_products = products.filter(skin_type=predicted_skin_type)
-
-#       # Return the filtered products
-#       product_serializer = ProductSerializer(filtered_products, many=True)
-#       return Response(product_serializer.data)
+class FetchAssessmentByUserIdView(APIView):
+    def get(self, request, user_id, format=None):
+        try:
+            user_profile = UserProfile.objects.get(user_id=user_id)
+            skin_assessment_results = UserSkinAssessmentResults.objects.filter(user_name=user_profile)
+            serializer = UserSkinAssessmentResultsSerializer(skin_assessment_results, many=True)
+            return Response(serializer.data)
+        except UserProfile.DoesNotExist:
+            return Response({'error': 'User profile not found'}, status=status.HTTP_404_NOT_FOUND)
+        except UserSkinAssessmentResults.DoesNotExist:
+            return Response({'error': 'No skin assessment results found for this user'}, status=status.HTTP_404_NOT_FOUND)
+        
+class FetchAllAssessmentsView(APIView):
+    def get(self, request, format=None):
+        skin_assessment_results = UserSkinAssessmentResults.objects.all()
+        serializer = UserSkinAssessmentResultsSerializer(skin_assessment_results, many=True)
+        return Response(serializer.data)
