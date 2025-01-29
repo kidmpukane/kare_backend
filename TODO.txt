@@ -1,5 +1,11 @@
 TODO:
-1. Add a dummy evaluation test
-2. Create a Condition Table
-3. Create Programs Table
-4. Map out the flow
+[x] Add a dummy evaluation test
+[x] Create a Skin Assessment Table
+[x] Create Programs Table
+[x] Map out the flow
+[] Fix account registration bug
+[] Fix account login
+[] Fix account CRUD
+[] Fix Skin Assessment Form bugs
+[] Create get program by Fk:ID
+
