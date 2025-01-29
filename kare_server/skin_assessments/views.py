@@ -8,7 +8,7 @@ from user_profiles.models import UserProfile
 # Mock function for predicting skin type (replace with actual implementation)
 def predict_skin_type(quiz_answers):
     # This is a placeholder for the ML model or logic used to predict the skin type.
-    return "dry"  # Replace with your actual prediction logic
+    return 1  # Replace with your actual prediction logic
 
 class PredictSkinAPIView(APIView):
     def post(self, request):
