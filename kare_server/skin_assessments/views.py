@@ -48,7 +48,7 @@ class PredictSkinAPIView(APIView):
 class FetchAssessmentByUserIdView(APIView):
     def get(self, request, user_id, format=None):
         try:
-            user_profile = UserProfile.objects.get(user_id=user_id)
+            user_profile = UserProfile.objects.get(id=user_id)
             skin_assessment_results = UserSkinAssessmentResults.objects.filter(user_name=user_profile)
             serializer = UserSkinAssessmentResultsSerializer(skin_assessment_results, many=True)
             return Response(serializer.data)
