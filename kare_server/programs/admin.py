@@ -1,14 +1,9 @@
 from django.contrib import admin
 from .models import (
-    DrySkinProgram,
-    OilySkinProgram,
-    CombinationSkinProgram,
-    SensitiveSkinProgram,
-    NormalSkinProgram,
+    SkinProgram,
+    CurrentProgram
 )
 
-admin.site.register(DrySkinProgram)
-admin.site.register(OilySkinProgram)
-admin.site.register(CombinationSkinProgram)
-admin.site.register(SensitiveSkinProgram)
-admin.site.register(NormalSkinProgram)
+admin.site.register(SkinProgram)
+admin.site.register(CurrentProgram)
+

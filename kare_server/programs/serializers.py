@@ -1,44 +1,15 @@
 from rest_framework import serializers
 from .models import (
     CurrentProgram,
-    DrySkinProgram,
-    OilySkinProgram,
-    CombinationSkinProgram,
-    SensitiveSkinProgram,
-    NormalSkinProgram,
+    SkinProgram
 )
 
 
 # Serializers for Hardcoded Programs
-class DrySkinProgramSerializer(serializers.ModelSerializer):
+class SkinProgramSerializer(serializers.ModelSerializer):
     class Meta:
-        model = DrySkinProgram
+        model = SkinProgram
         fields = "__all__"
-
-
-class OilySkinProgramSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OilySkinProgram
-        fields = "__all__"
-
-
-class CombinationSkinProgramSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CombinationSkinProgram
-        fields = "__all__"
-
-
-class SensitiveSkinProgramSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SensitiveSkinProgram
-        fields = "__all__"
-
-
-class NormalSkinProgramSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = NormalSkinProgram
-        fields = "__all__"
-
 
 # Serializer for Current Program
 class CurrentProgramSerializer(serializers.ModelSerializer):

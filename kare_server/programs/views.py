@@ -5,53 +5,32 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 import json
-from .models import NormalSkinProgram, OilySkinProgram, DrySkinProgram, CombinationSkinProgram, SensitiveSkinProgram
-from .serializers import NormalSkinProgramSerializer, OilySkinProgramSerializer, DrySkinProgramSerializer, CombinationSkinProgramSerializer, SensitiveSkinProgramSerializer
+from .models import SkinProgram, CurrentProgram
+from .serializers import SkinProgramSerializer, CurrentProgramSerializer
 
-
-
-SKIN_TYPE_PROGRAMS = {
-    0: NormalSkinProgram,
-    1: OilySkinProgram,
-    2: DrySkinProgram,
-    3: CombinationSkinProgram,
-    4: SensitiveSkinProgram,
-}
-
-def get_program_by_skin_type(skin_type):
-    model = SKIN_TYPE_PROGRAMS.get(skin_type)
-    return model.objects.first() if model else None
-
-@csrf_exempt
-def get_recommended_program(request):
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            skin_type = data.get("skin_type")
-
-            if skin_type is None or skin_type not in SKIN_TYPE_PROGRAMS:
-                return JsonResponse({"error": "Invalid or missing skin_type"}, status=400)
-
-            program = get_program_by_skin_type(skin_type)
-
-            if not program:
-                return JsonResponse({"error": "No program found for this skin type"}, status=404)
-
-            return JsonResponse({
-                "name": program.name,
-                "description": program.description,
-                "duration": program.duration,
-            })
-        except json.JSONDecodeError:
-            return JsonResponse({"error": "Invalid JSON"}, status=400)
-
-    elif request.method == "GET":  # Allow testing with GET
-        return JsonResponse({"message": "Use POST with { 'skin_type': X }"}, status=200)
-
-    return JsonResponse({"error": "Invalid request method"}, status=405)
 
 class ListAllProgramView(APIView):
     def get(self, request, format=None):
-        program = NormalSkinProgram.objects.all()
-        serializer = NormalSkinProgramSerializer(program, many=True)
+        program = SkinProgram.objects.all()
+        serializer = SkinProgramSerializer(program, many=True)
         return Response(serializer.data)
+    
+class RecommendedProgramView(APIView):
+    def get(self, request, format=None):
+        predicted_skin_type = request.query_params.get("predicted_skin_type")
+
+        if predicted_skin_type is None:
+            return Response({"error": "predicted_skin_type query parameter is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            predicted_skin_type = int(predicted_skin_type)
+        except ValueError:
+            return Response({"error": "predicted_skin_type must be an integer"}, status=status.HTTP_400_BAD_REQUEST)
+
+        programs = SkinProgram.objects.filter(skin_type=predicted_skin_type)
+
+        if not programs.exists():
+            return Response({"error": "No programs found for this skin type"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = SkinProgramSerializer(programs, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
