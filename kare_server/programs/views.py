@@ -15,22 +15,11 @@ class ListAllProgramView(APIView):
         serializer = SkinProgramSerializer(program, many=True)
         return Response(serializer.data)
     
-class RecommendedProgramView(APIView):
-    def get(self, request, format=None):
-        predicted_skin_type = request.query_params.get("predicted_skin_type")
-
-        if predicted_skin_type is None:
-            return Response({"error": "predicted_skin_type query parameter is required"}, status=status.HTTP_400_BAD_REQUEST)
-
+class FilterProgramView(APIView):
+    def get(self, request, skin_type, format=None):
         try:
-            predicted_skin_type = int(predicted_skin_type)
-        except ValueError:
-            return Response({"error": "predicted_skin_type must be an integer"}, status=status.HTTP_400_BAD_REQUEST)
-
-        programs = SkinProgram.objects.filter(skin_type=predicted_skin_type)
-
-        if not programs.exists():
-            return Response({"error": "No programs found for this skin type"}, status=status.HTTP_404_NOT_FOUND)
-
-        serializer = SkinProgramSerializer(programs, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+            programs = SkinProgram.objects.filter(skin_type=skin_type)
+            serializer = SkinProgramSerializer(programs, many=True)
+            return Response(serializer.data)
+        except SkinProgram.DoesNotExist:
+            return Response({'error': 'Program does not exist'}, status=status.HTTP_404_NOT_FOUND)
