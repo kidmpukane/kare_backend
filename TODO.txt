@@ -8,7 +8,7 @@ TODO:
 [x] Fix account CRUD
 [x] Fix Skin Assessment Form bugs
 [x] Create get skin Assessment by Fk:ID
-[] Find a way to filter programs based on a number: The skin results
+[x] Find a way to filter programs based on a number: The skin results
     have to be saved in numbers and that is the 
     order in which we are to fetch them from the
     db. 

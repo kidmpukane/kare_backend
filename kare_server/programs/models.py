@@ -3,12 +3,12 @@ from user_profiles.models import UserProfile
 
 class CurrentProgram(models.Model):
     user = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name="current_program")
-    current_program = models.CharField(max_length=255, default="None")
+    current_program = models.ManyToManyField("SkinProgram", related_name="current_programs")
     start_date = models.DateField(auto_now_add=True)
     end_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.user}'s Current Program: {self.current_program}"
+        return f"{self.user}'s Current Program"
 
 class SkinProgram(models.Model):
     name = models.CharField(max_length=255, default="Hydration Boost Program")

@@ -4,7 +4,8 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-import json
+from user_profiles.models import UserProfile
+from user_profiles.serializers import UserProfileSerializer
 from .models import SkinProgram, CurrentProgram
 from .serializers import SkinProgramSerializer, CurrentProgramSerializer
 
@@ -23,3 +24,35 @@ class FilterProgramView(APIView):
             return Response(serializer.data)
         except SkinProgram.DoesNotExist:
             return Response({'error': 'Program does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class CreateCurrentProgramView(APIView):
+    def post(self, request, format=None):
+        user_id = request.data.get("user_id")
+        program_ids = request.data.get("program_ids", [])
+
+        try:
+            user_profile = UserProfile.objects.get(id=user_id)
+            programs = SkinProgram.objects.filter(id__in=program_ids)
+
+            if not programs.exists():
+                return Response({"error": "No valid programs found"}, status=status.HTTP_400_BAD_REQUEST)
+
+            current_program, created = CurrentProgram.objects.get_or_create(user=user_profile)
+            current_program.current_program.set(programs)  # Assign multiple programs
+            current_program.save()
+
+            serializer = CurrentProgramSerializer(current_program)
+            return Response(serializer.data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
+
+        except UserProfile.DoesNotExist:
+            return Response({"error": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
+class GetCurrentProgramView(APIView):
+    def get(self, request, user_id, format=None):
+        try:
+            current_program = CurrentProgram.objects.get(user__id=user_id)
+            serializer = CurrentProgramSerializer(current_program)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except CurrentProgram.DoesNotExist:
+            return Response({"error": "No current program found for this user"}, status=status.HTTP_404_NOT_FOUND)

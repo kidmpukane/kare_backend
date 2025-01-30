@@ -31,3 +31,10 @@ Skin assessment returns:
         "user_name": 108707083539
     }
 ]
+
+310739197159
+
+{
+    "user_id": 310739197159,
+    "program_ids": [1]  
+}
