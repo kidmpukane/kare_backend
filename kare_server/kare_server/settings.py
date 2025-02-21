@@ -22,7 +22,6 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -32,15 +31,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #third party dependencies
+    # third party dependencies
     'rest_framework',
     'corsheaders',
     'softdelete',
-    #custom apps
+    # custom apps
     'accounts',
     'user_profiles',
     'skin_assessments',
     'programs',
+    'routines',
 ]
 
 MIDDLEWARE = [
