@@ -15,7 +15,8 @@ class ListAllProgramView(APIView):
         program = SkinProgram.objects.all()
         serializer = SkinProgramSerializer(program, many=True)
         return Response(serializer.data)
-    
+
+
 class FilterProgramView(APIView):
     def get(self, request, skin_type, format=None):
         try:
@@ -38,8 +39,10 @@ class CreateCurrentProgramView(APIView):
             if not programs.exists():
                 return Response({"error": "No valid programs found"}, status=status.HTTP_400_BAD_REQUEST)
 
-            current_program, created = CurrentProgram.objects.get_or_create(user=user_profile)
-            current_program.current_program.set(programs)  # Assign multiple programs
+            current_program, created = CurrentProgram.objects.get_or_create(
+                user=user_profile)
+            current_program.current_program.set(
+                programs)  # Assign multiple programs
             current_program.save()
 
             serializer = CurrentProgramSerializer(current_program)
@@ -47,6 +50,7 @@ class CreateCurrentProgramView(APIView):
 
         except UserProfile.DoesNotExist:
             return Response({"error": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
 
 class GetCurrentProgramView(APIView):
     def get(self, request, user_id, format=None):

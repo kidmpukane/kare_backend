@@ -19,5 +19,5 @@ class ListAllRoutines(APIView):
 class ListAllInstructions(APIView):
     def get(self, request, format=None):
         instructions = Instructions.objects.all()
-        serializer = SkinRoutineSerializers(instructions, many=True)
+        serializer = InstructionsSerializers(instructions, many=True)
         return Response(serializer.data)

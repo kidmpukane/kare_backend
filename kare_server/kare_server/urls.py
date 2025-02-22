@@ -7,4 +7,5 @@ urlpatterns = [
     path('api/user_profiles/', include('user_profiles.urls')),
     path('api/skin_assessments/', include('skin_assessments.urls')),
     path('api/programs/', include('programs.urls')),
+    path('api/routines/', include('routines.urls')),
 ]
