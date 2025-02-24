@@ -12,9 +12,21 @@ from .serializers import SkinRoutineSerializers, InstructionsSerializers
 
 class ListAllRoutines(APIView):
     def get(self, request, format=None):
-        routines = SkinRoutine.objects.all()
-        serializer = SkinRoutineSerializers(routines, many=True)
-        return Response(serializer.data)
+
+        try:
+            routines = SkinRoutine.objects.all()
+            if not routines.exists():
+                return Response(
+                    {"message": "No routines to be found."},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+            serializer = SkinRoutineSerializers(routines, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
 
 class GetRoutinesByProgramID(APIView):
@@ -39,16 +51,25 @@ class GetRoutinesByProgramID(APIView):
 
 class ListAllInstructions(APIView):
     def get(self, request, format=None):
-        instructions = Instructions.objects.all()
-        serializer = InstructionsSerializers(instructions, many=True)
-        return Response(serializer.data)
+        try:
+            instructions = Instructions.objects.all()
+            if not instructions.exists():
+                return Response(
+                    {"Message": "There were not instructions to be found."}, status=status.HTTP_404_NOT_FOUND,
+                )
+            serializer = InstructionsSerializers(instructions, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response({
+                "error": str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class GetInstructionsByRoutineID(APIView):
     def get(self, request, routine_id):
         try:
             instructions = Instructions.objects.filter(
-                routines__id=routine_id)  # 🔥 FIXED
+                routines__id=routine_id)
 
             if not instructions.exists():
                 return Response(
