@@ -6,7 +6,8 @@ class SkinRoutine(models.Model):
     programs = models.ManyToManyField(
         SkinProgram, related_name="program_routines"
     )
-    image = models.ImageField(upload_to="images/")
+    image = models.URLField(
+        default="https://i.pinimg.com/474x/47/16/0b/47160bc6ba111b50084c244853a03744.jpg")
     routine_name = models.CharField(max_length=255, default="Morning Routine")
     description = models.CharField(
         max_length=255, default="Morning Routine Description"
@@ -22,7 +23,8 @@ class Instructions(models.Model):
     routines = models.ManyToManyField(
         SkinRoutine, related_name="routine_instructions"
     )
-    image = models.ImageField(upload_to="images/")
+    image = models.URLField(
+        default="https://i.pinimg.com/474x/47/16/0b/47160bc6ba111b50084c244853a03744.jpg")
     instruction_name = models.CharField(
         max_length=255, default="Instruction Name"
     )
