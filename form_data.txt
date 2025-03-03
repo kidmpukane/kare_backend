@@ -38,3 +38,13 @@ Skin assessment returns:
     "user_id": 310739197159,
     "program_ids": [1]  
 }
+
+    {
+        "id": 1,
+        "name": "Dry Skin",
+        "description": "Prone to tightness, flakiness, and dehydration",
+        "duration": "12 weeks",
+        "price": "49.99",
+        "image": "https://i.pinimg.com/736x/af/08/95/af0895e5f194e07b1891593e40957aaf.jpg",
+        "skin_type": 1
+    }

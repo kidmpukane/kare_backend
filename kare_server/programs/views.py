@@ -9,6 +9,10 @@ from user_profiles.serializers import UserProfileSerializer
 from .models import SkinProgram, CurrentProgram
 from .serializers import SkinProgramSerializer, CurrentProgramSerializer
 
+# <------------------------------------------------------------------------------------------------------------------>
+# <----------------------------------------------------Program------------------------------------------------------->
+# <------------------------------------------------------------------------------------------------------------------>
+
 
 class ListAllProgramView(APIView):
     def get(self, request, format=None):
@@ -25,6 +29,69 @@ class FilterProgramView(APIView):
             return Response(serializer.data)
         except SkinProgram.DoesNotExist:
             return Response({'error': 'Program does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class CreateProgramView(APIView):
+    def post(self, request, format=None):
+        serializer = SkinProgramSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class RetrieveProgramView(APIView):
+
+    def get(self, request, program_id, format=None):
+        try:
+            program = SkinProgram.objects.get(id=program_id)
+            serializer = SkinProgramSerializer(program)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except SkinProgram.DoesNotExist:
+            return Response({'error': 'Program does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class UpdateProgramView(APIView):
+
+    def put(self, request, program_id, format=None):
+        try:
+            program = SkinProgram.objects.get(id=program_id)
+            serializer = SkinProgramSerializer(program, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except SkinProgram.DoesNotExist:
+            return Response({'error': 'Program does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class PartialUpdateProgramView(APIView):
+
+    def patch(self, request, program_id, format=None):
+        try:
+            program = SkinProgram.objects.get(id=program_id)
+            serializer = SkinProgramSerializer(
+                program, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except SkinProgram.DoesNotExist:
+            return Response({'error': 'Program does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class DeleteProgramView(APIView):
+
+    def delete(self, request, program_id, format=None):
+        try:
+            program = SkinProgram.objects.get(id=program_id)
+            program.delete()
+            return Response({'message': 'Program deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+        except SkinProgram.DoesNotExist:
+            return Response({'error': 'Program does not exist'}, status=status.HTTP_404_NOT_FOUND)
+# <------------------------------------------------------------------------------------------------------------------>
+# <-------------------------------------------------Current Program-------------------------------------------------->
+# <------------------------------------------------------------------------------------------------------------------>
 
 
 class CreateCurrentProgramView(APIView):
