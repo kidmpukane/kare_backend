@@ -49,6 +49,11 @@ class GetRoutinesByProgramID(APIView):
             )
 
 
+# <------------------------------------------------------------------------------------------------------------------>
+# <---------------------------------------------------Instructions--------------------------------------------------->
+# <------------------------------------------------------------------------------------------------------------------>
+
+
 class ListAllInstructions(APIView):
     def get(self, request, format=None):
         try:
@@ -85,53 +90,3 @@ class GetInstructionsByRoutineID(APIView):
                 {"error": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
-
-
-# class CreateCurrentProgramView(APIView):
-#     def post(self, request, format=None):
-#         user_id = request.data.get("user_id")
-#         program_ids = request.data.get("program_ids", [])
-
-#         try:
-#             user_profile = UserProfile.objects.get(id=user_id)
-#             programs = SkinProgram.objects.filter(id__in=program_ids)
-
-#             if not programs.exists():
-#                 return Response({"error": "No valid programs found"}, status=status.HTTP_400_BAD_REQUEST)
-
-#             current_program, created = CurrentProgram.objects.get_or_create(
-#                 user=user_profile)
-#             current_program.current_program.set(
-#                 programs)  # Assign multiple programs
-#             current_program.save()
-
-#             serializer = CurrentProgramSerializer(current_program)
-#             return Response(serializer.data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
-
-#         except UserProfile.DoesNotExist:
-#             return Response({"error": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
-
-
-# class CreateCurrentProgramView(APIView):
-#     def post(self, request, format=None):
-#         user_id = request.data.get("user_id")
-#         program_ids = request.data.get("program_ids", [])
-
-#         try:
-#             user_profile = UserProfile.objects.get(id=user_id)
-#             programs = SkinProgram.objects.filter(id__in=program_ids)
-
-#             if not programs.exists():
-#                 return Response({"error": "No valid programs found"}, status=status.HTTP_400_BAD_REQUEST)
-
-#             current_program, created = CurrentProgram.objects.get_or_create(
-#                 user=user_profile)
-#             current_program.current_program.set(
-#                 programs)  # Assign multiple programs
-#             current_program.save()
-
-#             serializer = CurrentProgramSerializer(current_program)
-#             return Response(serializer.data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
-
-#         except UserProfile.DoesNotExist:
-#             return Response({"error": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)

@@ -89,6 +89,7 @@ class DeleteProgramView(APIView):
             return Response({'message': 'Program deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
         except SkinProgram.DoesNotExist:
             return Response({'error': 'Program does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
 # <------------------------------------------------------------------------------------------------------------------>
 # <-------------------------------------------------Current Program-------------------------------------------------->
 # <------------------------------------------------------------------------------------------------------------------>
@@ -127,3 +128,26 @@ class GetCurrentProgramView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except CurrentProgram.DoesNotExist:
             return Response({"error": "No current program found for this user"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class UpdateCurrentProgramView(APIView):
+    def put(self, request, current_program_id, format=None):
+        try:
+            current_program = CurrentProgram.objects.get(id=current_program_id)
+            serializer = CurrentProgramSerializer(current_program)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except CurrentProgram.DoesNotExist:
+            return Response({'error': 'Current Program Does Not Exist'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class DeleteCurrentProgram(APIView):
+    def delete(self, request, current_program_id, format=None):
+        try:
+            current_program = CurrentProgram.objects.get(id=current_program_id)
+            current_program.delete()
+            return Response({"Program Deleted Successfully"}, status=status.HTTP_204_NO_CONTENT)
+        except CurrentProgram.DoesNotExist:
+            return Response({'error': 'Current Program Does Not Exist'}, status=status.HTTP_404_NOT_FOUND)
